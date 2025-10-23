@@ -1,26 +1,134 @@
+
+
+
+
+
+/* Tailwind v4 */
 @import "tailwindcss";
 
+/* === ТЁМНАЯ ТЕМА (всегда) через токены === */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* базовые */
+  --background: #0a0a0a;     /* фон всего сайта */
+  --foreground: #ededed;     /* основной текст */
+
+  /* дополнительные поверхности/границы */
+  --surface:    #111213;     /* фон карточек, блоков */
+  --muted:      #1a1b1c;     /* чуть светлее для hover/inputs */
+  --border:     #2a2b2c;     /* цвет границ */
+
+  /* акцент и состояние */
+  --accent:            #10b981; /* зелёный акцент */
+  --accent-foreground: #0b2c22; /* текст на зелёной кнопке при hover/active */
+  --danger:            #ef4444; /* красный (ошибки/предупреждения) */
 }
 
+/* Проброс токенов в Tailwind (в4) */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface:    var(--surface);
+  --color-muted:      var(--muted);
+  --color-border:     var(--border);
+  --color-accent:     var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-danger:     var(--danger);
+
+  --radius-md: 0.75rem;    /* общий радиус для карточек/кнопок */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* Сбрасываем auto-dark: теперь всегда тёмная тема */
+@media (prefers-color-scheme: dark) { :root {} }
 
+/* Базовые */
+html, body {
+  height: 100%;
+}
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* === Готовые вспомогательные классы === */
+
+/* Карточка / контейнер */
+.card {
+  @apply rounded-[var(--radius-md)] bg-surface border border-border shadow-sm;
+}
+
+/* Кнопки */
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-[var(--radius-md)]
+         px-4 py-2 font-medium transition;
+}
+.btn-primary {
+  @apply bg-accent text-foreground hover:opacity-95 active:translate-y-[1px];
+}
+
+/* Таб-кнопки (outline на тёмной теме) */
+.btn-tab {
+  @apply inline-flex items-center justify-center gap-2
+         px-6 py-3 rounded-[var(--radius-md)]
+         border-2 border-border
+         text-foreground bg-background
+         transition-all duration-200 ease-out
+         hover:bg-muted hover:border-accent hover:text-accent hover:rounded-xl
+         active:translate-y-[1px];
+}
+
+.btn-tab-active {
+  @apply border-accent text-accent bg-muted ring-1 ring-accent/30;
+}
+
+
+/* Активная таб-кнопка */
+.btn-tab-active {
+  @apply border-accent text-accent bg-muted ring-1 ring-accent/30;
+}
+
+
+
+
+.btn-outline {
+  @apply border border-border bg-surface text-foreground hover:bg-muted;
+}
+.btn-ghost {
+  @apply text-foreground hover:bg-muted;
+}
+.btn-danger {
+  @apply bg-danger text-white hover:opacity-95;
+}
+
+
+/* Таблицы */
+.table {
+  @apply w-full border border-border rounded-[var(--radius-md)] overflow-hidden;
+}
+.table thead {
+  @apply bg-muted text-foreground;
+}
+.table th, .table td {
+  @apply px-3 py-2 border-t border-border;
+}
+
+/* Разделители/рамки */
+.border {
+  border-color: var(--border);
+}
+
+/* Ссылки */
+.link {
+  @apply text-accent hover:underline;
+}
+
+/* Индивидуальные стили для кнопок калькулятора */
+.btn-reset {
+  @apply bg-amber-700 text-white border border-border
+         hover:bg-amber-700 hover:scale-105 transition-all duration-200;
+}
+
+.btn-result {
+  @apply bg-green-700 text-white border border-border
+         hover:bg-green-600 hover:scale-105 transition-all duration-200;
 }
