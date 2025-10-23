@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { Answers } from '@data/factors';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import type { Answers } from "@data/factors";
 
 type State = {
   answers: Answers;
@@ -24,6 +24,6 @@ export const useCalcStore = create<State>()(
         set((s) => ({ answers: { ...s.answers, [key]: value } })),
       reset: () => set({ answers: initial }),
     }),
-    { name: 'calc-store' }
+    { name: "calc-store" }
   )
 );

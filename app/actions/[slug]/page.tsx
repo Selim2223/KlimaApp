@@ -1,51 +1,44 @@
+import { notFound } from "next/navigation";
+import { actions } from "@data/actions";
+import Image from "next/image";
+import Link from "next/link";
 
+type Props = { params: { slug: string } };
 
-
-
-import { notFound } from 'next/navigation';
-import { actions } from '@data/actions';
-import Image from 'next/image';
-import Link from 'next/link';
-
-export default function ActionDetail({ params }: { params: { slug: string } }) {
+export default function ActionDetail({ params }: Props) {
   const item = actions.find((a) => a.slug === params.slug);
-  if (!item) return notFound();
+  if (!item) notFound();
 
   return (
-    <article className="max-w-3xl mx-auto space-y-5">
-      {/* 🔹 Заголовок */}
-      <h1 className="text-2xl font-bold text-green-400 text-center">
-        {item.title}
-      </h1>
-
-      {/* 🔹 Изображение */}
-      <div className="relative w-full aspect-[16/9] rounded-lg overflow-hidden">
+    <article className="mx-auto max-w-2xl space-y-4">
+      {/* bilde */}
+      <div className="overflow-hidden rounded-lg">
         <Image
           src={item.image}
           alt={item.title}
-          fill
-          className="object-cover"
-          sizes="(min-width:768px) 640px, 100vw"
+          width={800}
+          height={450}
+          className="h-auto w-full object-cover"
         />
       </div>
 
-      {/* 🔹 Текст под изображением */}
-      <p className="text-lg text-green-400 text-center">{item.text}</p>
+      {/* tekst */}
+      <p className="text-center text-base text-gray300">{item.text}</p>
 
-      {/* 🔹 Кнопки */}
-      <div className="flex gap-4 justify-center pt-4">
+      {/* knaper */}
+      <div className="flex justify-center gap-3">
         <Link
           href="/actions"
-          className="px-5 py-2 rounded-lg bg-red-900 hover:bg-red-500 text-white transition"
+          className="rounded-md bg-gray-800 px-4 py-2 text-white hover:bg-gray-700"
         >
-          ←Tilbake
+          ← Tilbake
         </Link>
 
         <a
           href={item.link}
           target="_blank"
           rel="noreferrer"
-          className="px-5 py-2 rounded-lg bg-green-700 hover:bg-green-600 text-white transition"
+          className="rounded-md bg-green-600 px-4 py-2 text-white hover:bg-green-500"
         >
           Les mer
         </a>

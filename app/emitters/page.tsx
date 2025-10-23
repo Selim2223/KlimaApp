@@ -1,80 +1,48 @@
-// 'use client';
+"use client";
 
-// import { useState } from 'react';
-// import { countries } from '@data/countries';
-// import CountryTable from '@components/CountryTable';
-// import CountryChart from '@components/CountryChart';
-
-// export default function EmittersPage() {
-//   const [view, setView] = useState<'table' | 'chart'>('table');
-
-//   return (
-//     <section className="space-y-4">
-//       <h1 className="text-2xl font-bold text-center">
-//         Top 20 land med CO2 utslipp per inbygger
-//       </h1>
-
-//       <div className="flex gap-10">
-//         <button
-//           className={`btn text-2xl rounded-lg border-1 transition  ${view === 'table' ? 'btn-active' : ''}`}
-//           onClick={() => setView('table')}
-//         >
-//           Tabell
-//         </button>
-//         <button
-//           className={`btn text-2xl rounded-lg border-1 transition ${view === 'chart' ? 'btn-active' : ''}`}
-//           onClick={() => setView('chart')}
-//         >
-//           Diagram
-//         </button>
-//       </div>
-
-//       {view === 'table' ? (
-//         <CountryTable data={countries} />
-//       ) : (
-//         <CountryChart data={countries} />
-//       )}
-//     </section>
-//   );
-// }
-
-
-
-
-
-'use client';
-
-import { useState } from 'react';
-import { countries } from '@data/countries';
-import CountryTable from '@components/CountryTable';
-import CountryChart from '@components/CountryChart';
+import { useState } from "react";
+import { countries } from "@data/countries";
+import CountryTable from "@components/CountryTable";
+import CountryChart from "@components/CountryChart";
 
 export default function EmittersPage() {
-  const [view, setView] = useState<'table' | 'chart'>('table');
+  // bruker useState hook
+  const [view, setView] = useState<"table" | "chart">("table");
+
+  const showTable = view === "table";
+  const showChart = view === "chart";
 
   return (
-    <section className="space-y-4">
+    <section className="max-w-3xl mx-auto space-y-4 p-4">
       <h1 className="text-2xl font-bold text-center">
         Top 20 land med CO2 utslipp per inbygger
       </h1>
 
-      <div className="flex gap-6 justify-center">
+      {/* knapper – kolonne på mobil, rad på stor skjerm */}
+      <div className="flex flex-col sm:flex-row justify-center gap-3">
         <button
-          className={`btn btn-tab text-2xl ${view === 'table' ? 'btn-tab-active' : ''}`}
-          onClick={() => setView('table')}
+          className={`btn btn-tab text-2xl w-full sm:w-auto ${
+            showTable ? "btn-tab-active" : ""
+          }`}
+          onClick={() => setView("table")}
+          aria-pressed={showTable}
         >
           Tabell
         </button>
 
         <button
-          className={`btn btn-tab text-2xl ${view === 'chart' ? 'btn-tab-active' : ''}`}
-          onClick={() => setView('chart')}
+          className={`btn btn-tab text-2xl w-full sm:w-auto ${
+            showChart ? "btn-tab-active" : ""
+          }`}
+          onClick={() => setView("chart")}
+          aria-pressed={showChart}
         >
           Diagram
         </button>
       </div>
 
-      {view === 'table' ? (
+      {/* viser tabell eller diagram */}
+      {showTable ? (
         <CountryTable data={countries} />
       ) : (
         <CountryChart data={countries} />
